@@ -2,7 +2,7 @@
 
 [![Published on webcomponents.org](https://img.shields.io/badge/webcomponents.org-published-blue.svg)](https://www.webcomponents.org/element/msc-shortcut) [![DeepScan grade](https://deepscan.io/api/teams/16372/projects/29392/branches/944454/badge/grade.svg)](https://deepscan.io/dashboard#view=project&tid=16372&pid=29392&bid=944454)
 
-&lt;msc-shortcut /> is a menu component which based on [Popover API](https://developer.mozilla.org/en-US/docs/Web/API/Popover_API) & [CSS anchor positioning API](https://developer.chrome.com/docs/css-ui/anchor-positioning-api). That means shortcut will be top-layer with well controlled position. Besides that, there will be 16 kinds of [position-area](https://chrome.dev/anchor-tool/) for developers to setup shortcut display position.
+&lt;msc-shortcut /> is a menu component which based on [Popover API](https://developer.mozilla.org/en-US/docs/Web/API/Popover_API) & [CSS anchor positioning API](https://developer.chrome.com/docs/css-ui/anchor-positioning-api). That means shortcut will be top-layer with well controlled position. Besides that, there will be 20 kinds of [position-area](https://chrome.dev/anchor-tool/) for developers to setup shortcut display position.
 
 ![<msc-shortcut />](https://blog.lalacube.com/mei/img/preview/msc-shortcut.png)
 
