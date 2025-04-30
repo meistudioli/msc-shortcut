@@ -1,0 +1,26 @@
+{
+  "name": "msc-shortcut",
+  "version": "1.0.0",
+  "description": "<msc-shortcut /> is a menu component which based on Popover API & CSS anchor positioning API. That means shortcut will be top-layer with well controlled position. Besides that, there will be 16 kinds of position-area for developers to setup shortcut display position.",
+  "main": "index.html",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/meistudioli/msc-shortcut.git"
+  },
+  "keywords": [
+    "web",
+    "front-end",
+    "web component",
+    "menu",
+    "shortcut"
+  ],
+  "author": "Paul Li",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/meistudioli/msc-shortcut/issues"
+  },
+  "homepage": "https://github.com/meistudioli/msc-shortcut#readme"
+}
