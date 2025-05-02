@@ -521,6 +521,7 @@ export class MscShortcut extends HTMLElement {
     // evts
     this._onTriggerClick = this._onTriggerClick.bind(this);
     this._onShortcutClick = this._onShortcutClick.bind(this);
+    this._onToggle = this._onToggle.bind(this);
   }
 
   async connectedCallback() {
@@ -546,6 +547,7 @@ export class MscShortcut extends HTMLElement {
     const signal = this.#data.controller.signal;
     trigger.addEventListener('click', this._onTriggerClick, { signal });
     shortcut.addEventListener('click', this._onShortcutClick, { signal });
+    shortcut.addEventListener('toggle', this._onToggle, { signal });
   }
 
   disconnectedCallback() {
@@ -629,7 +631,7 @@ export class MscShortcut extends HTMLElement {
         shortcut.replaceChildren();
 
         if (isAnchorPositioningAPIReady) {
-          shortcut.popover = 'manual';
+          shortcut.popover = 'auto';
         } else {
           shortcut.toggleAttribute('popover', false);
         }
@@ -709,6 +711,10 @@ export class MscShortcut extends HTMLElement {
   }
 
   _onTriggerClick() {
+    if (isAnchorPositioningAPIReady) {
+      return;
+    }
+
     const force = !this.open;
 
     this.#fireEvent(custumEvents.toggle, {
@@ -716,9 +722,7 @@ export class MscShortcut extends HTMLElement {
       newState: force ? 'open' : 'closed'
     });
 
-    if (!isAnchorPositioningAPIReady) {
-      this.#nodes.trigger.toggleAttribute('data-reverse');
-    }
+    this.#nodes.trigger.toggleAttribute('data-reverse');
   }
 
   _onShortcutClick(evt) {
@@ -729,6 +733,11 @@ export class MscShortcut extends HTMLElement {
     }
 
     if (!isAnchorPositioningAPIReady) {
+      this.#fireEvent(custumEvents.toggle, {
+        oldState: 'open',
+        newState: 'closed'
+      });
+
       this.#nodes.trigger.toggleAttribute('data-reverse', false);
     }
     
@@ -737,6 +746,12 @@ export class MscShortcut extends HTMLElement {
       title: button.title,
       content: button.textContent.trim()
     });
+  }
+
+  _onToggle(evt) {
+    const { newState, oldState } = evt;
+
+    this.#fireEvent(custumEvents.toggle, { newState, oldState });
   }
 
   toggle(force = !this.open) {
