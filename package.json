@@ -1,6 +1,6 @@
 {
   "name": "msc-shortcut",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "<msc-shortcut /> is a menu component which based on Popover API & CSS anchor positioning API. That means shortcut will be top-layer with well controlled position. Besides that, there will be 16 kinds of position-area for developers to setup shortcut display position.",
   "main": "index.html",
   "scripts": {

@@ -264,7 +264,8 @@ Array(30)
 }
 
 /* bottom series */
-:host([data-position-area="bottom span-right"]) .main {
+:host([data-position-area="bottom span-right"]) .main,
+:host([data-position-area="span-right bottom"]) .main {
   --position-area: bottom span-right;
   --margin: var(--gap) 0 0;
 
@@ -273,7 +274,8 @@ Array(30)
   --translate-active: 0 0;
 }
 
-:host([data-position-area="bottom span-left"]) .main {
+:host([data-position-area="bottom span-left"]) .main,
+:host([data-position-area="span-left bottom"]) .main {
   --position-area: bottom span-left;
   --margin: var(--gap) 0 0;
 
@@ -283,6 +285,7 @@ Array(30)
 }
 
 :host([data-position-area="bottom center"]) .main,
+:host([data-position-area="center bottom"]) .main,
 :host([data-position-area="bottom"]) .main {
   --position-area: bottom center;
   --margin: var(--gap) 0 0;
@@ -293,7 +296,8 @@ Array(30)
 }
 
 /* left series */
-:host([data-position-area="left span-bottom"]) .main {
+:host([data-position-area="left span-bottom"]) .main,
+:host([data-position-area="span-bottom left"]) .main {
   --position-area: left span-bottom;
   --margin: 0 var(--gap) 0 0;
 
@@ -302,7 +306,8 @@ Array(30)
   --translate-active: -100% 0;
 }
 
-:host([data-position-area="left span-top"]) .main {
+:host([data-position-area="left span-top"]) .main,
+:host([data-position-area="span-top left"]) .main {
   --position-area: left span-top;
   --margin: 0 var(--gap) 0 0;
 
@@ -312,6 +317,7 @@ Array(30)
 }
 
 :host([data-position-area="left center"]) .main,
+:host([data-position-area="center left"]) .main,
 :host([data-position-area="left"]) .main {
   --position-area: left center;
   --margin: 0 var(--gap) 0 0;
@@ -322,7 +328,8 @@ Array(30)
 }
 
 /* top series */
-:host([data-position-area="top span-left"]) .main {
+:host([data-position-area="top span-left"]) .main,
+:host([data-position-area="span-left top"]) .main {
   --position-area: top span-left;
   --margin: 0 0 var(--gap) 0;
 
@@ -331,7 +338,8 @@ Array(30)
   --translate-active: 0 -100%;
 }
 
-:host([data-position-area="top span-right"]) .main {
+:host([data-position-area="top span-right"]) .main,
+:host([data-position-area="span-right top"]) .main {
   --position-area: top span-right;
   --margin: 0 0 var(--gap) 0 ;
 
@@ -341,6 +349,7 @@ Array(30)
 }
 
 :host([data-position-area="top center"]) .main,
+:host([data-position-area="center top"]) .main,
 :host([data-position-area="top"]) .main {
   --position-area: top center;
   --margin: 0 0 var(--gap) 0 ;
@@ -351,7 +360,8 @@ Array(30)
 }
 
 /* right series */
-:host([data-position-area="right span-bottom"]) .main {
+:host([data-position-area="right span-bottom"]) .main,
+:host([data-position-area="span-bottom right"]) .main {
   --position-area: right span-bottom;
   --margin: 0 0 0 var(--gap);
 
@@ -360,7 +370,8 @@ Array(30)
   --translate-active: 0 0;
 }
 
-:host([data-position-area="right span-top"]) .main {
+:host([data-position-area="right span-top"]) .main,
+:host([data-position-area="span-top right"]) .main {
   --position-area: right span-top;
   --margin: 0 0 0 var(--gap);
 
@@ -370,17 +381,19 @@ Array(30)
 }
 
 :host([data-position-area="right"]) .main,
-:host([data-position-area="right center"]) .main {
+:host([data-position-area="right center"]) .main,
+:host([data-position-area="center right"]) .main {
   --position-area: right center;
   --margin: 0 0 0 var(--gap);
 
-  --inset: 50% auto auto calc(var(--size-with-unit) + var(--gap));
+  --inset: 50% auto auto calc(100% + var(--gap));
   --translate-normal: 0 -35%;
   --translate-active: 0 -50%;
 }
 
 /* exrea */
-:host([data-position-area="top left"]) .main {
+:host([data-position-area="top left"]) .main,
+:host([data-position-area="left top"]) .main {
   --position-area: top left;
   --margin: 0 var(--gap) 0;
 
@@ -389,7 +402,8 @@ Array(30)
   --translate-active: -100% -100%;
 }
 
-:host([data-position-area="top right"]) .main {
+:host([data-position-area="top right"]) .main,
+:host([data-position-area="right top"]) .main {
   --position-area: top right;
   --margin: 0 0 var(--gap) var(--gap);
 
@@ -398,7 +412,8 @@ Array(30)
   --translate-active: 0 -100%;
 }
 
-:host([data-position-area="bottom left"]) .main {
+:host([data-position-area="bottom left"]) .main,
+:host([data-position-area="left bottom"]) .main {
   --position-area: bottom left;
   --margin: var(--gap) var(--gap) 0 0;
 
@@ -407,7 +422,8 @@ Array(30)
   --translate-active: -100% 0;
 }
 
-:host([data-position-area="bottom right"]) .main {
+:host([data-position-area="bottom right"]) .main,
+:host([data-position-area="right bottom"]) .main {
   --position-area: bottom right;
   --margin: var(--gap) 0 0 var(--gap);
 
