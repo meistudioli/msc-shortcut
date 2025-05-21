@@ -204,10 +204,10 @@ msc-shortcut {
 </style>
 ```
 
-Otherwise delevelopers could also add attribute - `data-positionarea` to change shortcut display position. Default is "`right span-bottom`". (view all [position-area](https://chrome.dev/anchor-tool/))
+Otherwise delevelopers could also add attribute - `data-position-area` to change shortcut display position. Default is "`inline-end span-block-end`". (`logical properties` support only, view all [position-area](https://chrome.dev/anchor-tool/))
 
 ```html
-<msc-shortcut data-position-area="right span-bottom">
+<msc-shortcut data-position-area="inline-end span-block-end">
   ...
 </msc-shortcut>
 ```
@@ -254,3 +254,4 @@ Set groups config. This should be array string. Each unit needs to contain "`leg
 - [Popover API](https://developer.mozilla.org/en-US/docs/Web/API/Popover_API)
 - [CSS anchor positioning API](https://developer.chrome.com/docs/css-ui/anchor-positioning-api)
 - [position-area](https://chrome.dev/anchor-tool/)
+- [W3C > anchor position](https://www.w3.org/TR/css-anchor-position-1/#position-area)

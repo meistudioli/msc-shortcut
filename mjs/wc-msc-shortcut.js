@@ -30,13 +30,14 @@ ${_wccss}
   inline-size: fit-content;
   block-size: fit-content;
   display: block;
+  writing-mode: inherit;
 }
 
 .main {
-  --size: var(--msc-shortcut-trigger-size, 40);;
+  --size: var(--msc-shortcut-trigger-size, 40);
   --size-with-unit: calc(var(--size) * 1px);
   --gap: var(--msc-shortcut--gap, 12px);
-
+  
   /* trigger */
   --trigger-icon: var(
     --msc-shortcut-trigger-icon,
@@ -47,6 +48,8 @@ ${_wccss}
   --trigger-overlay: var(--msc-shortcut-trigger-overlay, rgba(225 246 245));
 
   /* shortcut */
+  --shortcut-inline-size: 0;
+  --shortcut-block-size: 0;
   --shortcut-background: var(--msc-shortcut-shortcut-background, rgba(255 255 255));
   --shortcut-legend-color: var(--msc-shortcut-shortcut-legend-color, rgba(151 158 168));
   --shortcut-text-color: var(--msc-shortcut-shortcut-text-color, rgba(35 42 49));
@@ -54,12 +57,16 @@ ${_wccss}
   --shortcut-line-color: var(--msc-shortcut-shortcut-line-color, rgba(224 228 233));
   --shortcut-overlay: var(--msc-shortcut-shortcut-overlay, rgba(225 246 245));
 
+  /* shortcut common */
+  --inset-inline: auto;
+  --inset-block: auto;
+  --margin-inline: var(--gap) 0;
+  --margin-block: 0;
+
   /* anchor position */
-  --position-area: right span-bottom;
-  --margin: 0 0 0 var(--gap);
+  --position-area: inline-end span-block-end;
   
   /* none support anchor position */
-  --inset: 0 auto auto calc(100% + var(--gap));
   --translate-normal: 0 15%;
   --translate-active: 0 0;
   --translate: var(--translate-normal);
@@ -116,15 +123,24 @@ ${_wccss}
 
   .shortcut {
     position: absolute;
+    inset-inline: var(--inset-inline);
+    inset-block: var(--inset-block);
     min-inline-size: 200px;
     background-color: rgba(255 0 0/.5);
     border-radius: 8px;
     border: 0 none;
     pointer-events: none;
     box-shadow: 0 0 1px rgba(0 0 0/.1), 0 2px 4px rgba(0 0 0/.08);
+    margin-inline: var(--margin-inline);
+    margin-block: var(--margin-block);
 
     padding-block: .5em 1em;
     background-color: var(--shortcut-background);
+
+    &.shortcut--clone {
+      visibility: hidden;
+      pointer-events: none;
+    }
 
     .shortcut__set {
       font-family: 'PingFang TC',system-ui,sans-serif;
@@ -216,7 +232,6 @@ Array(30)
     }
 
     &:not([popover]) {
-      inset: var(--inset);
       translate: var(--translate);
 
       opacity: var(--opacity);
@@ -242,9 +257,8 @@ Array(30)
         }
       }
 
-      inset: 0;
+      inset: auto;
       translate: none;
-      margin: var(--margin);
       position-anchor: --main-anchor;
       position-area: var(--position-area);
 
@@ -263,177 +277,181 @@ Array(30)
   }
 }
 
-/* bottom series */
-:host([data-position-area="bottom span-right"]) .main,
-:host([data-position-area="span-right bottom"]) .main {
-  --position-area: bottom span-right;
-  --margin: var(--gap) 0 0;
+.main.main--maneuver{}
 
-  --inset: calc(100% + var(--gap)) auto auto 0;
-  --translate-normal: 0 15%;
-  --translate-active: 0 0;
+/* inline-end series */
+:host([data-position-area="inline-end span-block-end"]) .main,
+:host([data-position-area="span-block-end inline-end"]) .main {
+  --position-area: self-inline-end span-self-block-end;
+  --margin-inline: var(--gap) 0;
+  --margin-block: 0;
+
+  --inset-inline: var(--size-with-unit) auto;
+  --inset-block: 0 auto;
 }
 
-:host([data-position-area="bottom span-left"]) .main,
-:host([data-position-area="span-left bottom"]) .main {
-  --position-area: bottom span-left;
-  --margin: var(--gap) 0 0;
+:host([data-position-area="inline-end span-block-start"]) .main,
+:host([data-position-area="span-block-start inline-end"]) .main {
+  --position-area: self-inline-end span-self-block-start;
+  --margin-inline: var(--gap) 0;
+  --margin-block: 0;
 
-  --inset: calc(100% + var(--gap)) 0 auto auto;
-  --translate-normal: 0 15%;
-  --translate-active: 0 0;
+  --inset-inline: var(--size-with-unit) auto;
+  --inset-block: calc(var(--size-with-unit) - var(--shortcut-block-size)) auto;
 }
 
-:host([data-position-area="bottom center"]) .main,
-:host([data-position-area="center bottom"]) .main,
-:host([data-position-area="bottom"]) .main {
-  --position-area: bottom center;
-  --margin: var(--gap) 0 0;
+:host([data-position-area="inline-end center"]) .main,
+:host([data-position-area="center inline-end"]) .main,
+:host([data-position-area="inline-end"]) .main {
+  --position-area: self-inline-end center;
+  --margin-inline: var(--gap) 0;
+  --margin-block: 0;
 
-  --inset: calc(100% + var(--gap)) auto auto 50%;
-  --translate-normal: -50% 15%;
-  --translate-active: -50% 0;
+  --inset-inline: var(--size-with-unit) auto;
+  --inset-block: calc(50% - (var(--shortcut-block-size) / 2)) auto;
 }
 
-/* left series */
-:host([data-position-area="left span-bottom"]) .main,
-:host([data-position-area="span-bottom left"]) .main {
-  --position-area: left span-bottom;
-  --margin: 0 var(--gap) 0 0;
+/* inline-start series */
+:host([data-position-area="inline-start span-block-end"]) .main,
+:host([data-position-area="span-block-end inline-start"]) .main {
+  --position-area: self-inline-start span-self-block-end;
+  --margin-inline: 0 var(--gap);
+  --margin-block: 0;
 
-  --inset: 0 auto auto calc(var(--gap) * -1);
-  --translate-normal: -100% 15%;
-  --translate-active: -100% 0;
+  --inset-inline: auto var(--size-with-unit);
+  --inset-block: 0 auto;
 }
 
-:host([data-position-area="left span-top"]) .main,
-:host([data-position-area="span-top left"]) .main {
-  --position-area: left span-top;
-  --margin: 0 var(--gap) 0 0;
+:host([data-position-area="inline-start span-block-start"]) .main,
+:host([data-position-area="span-block-start inline-start"]) .main {
+  --position-area: self-inline-start span-self-block-start;
+  --margin-inline: 0 var(--gap);
+  --margin-block: 0;
 
-  --inset: auto auto 0 calc(var(--gap) * -1);
-  --translate-normal: -100% 15%;
-  --translate-active: -100% 0;
+  --inset-inline: auto var(--size-with-unit);
+  --inset-block: calc(var(--size-with-unit) - var(--shortcut-block-size)) auto;
 }
 
-:host([data-position-area="left center"]) .main,
-:host([data-position-area="center left"]) .main,
-:host([data-position-area="left"]) .main {
-  --position-area: left center;
-  --margin: 0 var(--gap) 0 0;
+:host([data-position-area="inline-start center"]) .main,
+:host([data-position-area="center inline-start"]) .main,
+:host([data-position-area="inline-start"]) .main {
+  --position-area: self-inline-start center;
+  --margin-inline: 0 var(--gap);
+  --margin-block: 0;
 
-  --inset: 50% auto auto calc(var(--gap) * -1);
-  --translate-normal: -100% -35%;
-  --translate-active: -100% -50%;
+  --inset-inline: auto var(--size-with-unit);
+  --inset-block: calc(50% - (var(--shortcut-block-size) / 2)) auto;
 }
 
-/* top series */
-:host([data-position-area="top span-left"]) .main,
-:host([data-position-area="span-left top"]) .main {
-  --position-area: top span-left;
-  --margin: 0 0 var(--gap) 0;
+/* block-end series */
+:host([data-position-area="block-end span-inline-end"]) .main,
+:host([data-position-area="span-inline-end block-end"]) .main {
+  --position-area: self-block-end span-self-inline-end;
+  --margin-inline: 0;
+  --margin-block: var(--gap) 0;
 
-  --inset: calc(var(--gap) * -1) 0 auto auto;
-  --translate-normal: 0 -85%;
-  --translate-active: 0 -100%;
+  --inset-inline: 0 auto;
+  --inset-block: var(--size-with-unit) auto;
 }
 
-:host([data-position-area="top span-right"]) .main,
-:host([data-position-area="span-right top"]) .main {
-  --position-area: top span-right;
-  --margin: 0 0 var(--gap) 0 ;
+:host([data-position-area="block-end span-inline-start"]) .main,
+:host([data-position-area="span-inline-start block-end"]) .main {
+  --position-area: self-block-end span-self-inline-start;
+  --margin-inline: 0;
+  --margin-block: var(--gap) 0;
 
-  --inset: calc(var(--gap) * -1) auto auto 0;
-  --translate-normal: 0 -85%;
-  --translate-active: 0 -100%;
+  --inset-inline: auto 0;
+  --inset-block: var(--size-with-unit) auto;
 }
 
-:host([data-position-area="top center"]) .main,
-:host([data-position-area="center top"]) .main,
-:host([data-position-area="top"]) .main {
-  --position-area: top center;
-  --margin: 0 0 var(--gap) 0 ;
+:host([data-position-area="block-end center"]) .main,
+:host([data-position-area="center block-end"]) .main,
+:host([data-position-area="block-end"]) .main {
+  --position-area: self-block-end center;
+  --margin-inline: 0;
+  --margin-block: var(--gap) 0;
 
-  --inset: calc(var(--gap) * -1) auto auto 50%;
-  --translate-normal: -50% -85%;
-  --translate-active: -50% -100%;
+  --inset-inline: calc(50% - (var(--shortcut-inline-size) / 2)) auto;
+  --inset-block: var(--size-with-unit) auto;
 }
 
-/* right series */
-:host([data-position-area="right span-bottom"]) .main,
-:host([data-position-area="span-bottom right"]) .main {
-  --position-area: right span-bottom;
-  --margin: 0 0 0 var(--gap);
+/* block-start series */
+:host([data-position-area="block-start span-inline-end"]) .main,
+:host([data-position-area="span-inline-end block-start"]) .main {
+  --position-area: self-block-start span-self-inline-end;
+  --margin-inline: 0;
+  --margin-block: 0 var(--gap);
 
-  --inset: 0 auto auto calc(100% + var(--gap));
-  --translate-normal: 0 15%;
-  --translate-active: 0 0;
+  --inset-inline: 0 auto;
+  --inset-block: auto var(--size-with-unit);
 }
 
-:host([data-position-area="right span-top"]) .main,
-:host([data-position-area="span-top right"]) .main {
-  --position-area: right span-top;
-  --margin: 0 0 0 var(--gap);
+:host([data-position-area="block-start span-inline-start"]) .main,
+:host([data-position-area="span-inline-start block-start"]) .main {
+  --position-area: self-block-start span-self-inline-start;
+  --margin-inline: 0;
+  --margin-block: 0 var(--gap);
 
-  --inset: auto auto 0 calc(100% + var(--gap));
-  --translate-normal: 0 15%;
-  --translate-active: 0 0;
+  --inset-inline: auto 0;
+  --inset-block: auto var(--size-with-unit);
 }
 
-:host([data-position-area="right"]) .main,
-:host([data-position-area="right center"]) .main,
-:host([data-position-area="center right"]) .main {
-  --position-area: right center;
-  --margin: 0 0 0 var(--gap);
+:host([data-position-area="block-start center"]) .main,
+:host([data-position-area="center block-start"]) .main,
+:host([data-position-area="block-start"]) .main {
+  --position-area: self-block-start center;
+  --margin-inline: 0;
+  --margin-block: 0 var(--gap);
 
-  --inset: 50% auto auto calc(100% + var(--gap));
-  --translate-normal: 0 -35%;
-  --translate-active: 0 -50%;
+  --inset-inline: calc(50% - (var(--shortcut-inline-size) / 2)) auto;
+  --inset-block: auto var(--size-with-unit);
 }
 
 /* exrea */
-:host([data-position-area="top left"]) .main,
-:host([data-position-area="left top"]) .main {
-  --position-area: top left;
-  --margin: 0 var(--gap) 0;
+:host([data-position-area="block-start inline-start"]) .main,
+:host([data-position-area="inline-start block-start"]) .main,
+:host([data-position-area="start"]) .main {
+  --position-area: self-block-start self-inline-start;
+  --margin-inline: 0 var(--gap);
+  --margin-block: 0 var(--gap);
 
-  --inset: calc(var(--gap) * -1) auto auto calc(var(--gap) * -1);
-  --translate-normal: -100% -85%;
-  --translate-active: -100% -100%;
+  --inset-inline: auto var(--size-with-unit);
+  --inset-block: auto var(--size-with-unit);
 }
 
-:host([data-position-area="top right"]) .main,
-:host([data-position-area="right top"]) .main {
-  --position-area: top right;
-  --margin: 0 0 var(--gap) var(--gap);
+:host([data-position-area="block-start inline-end"]) .main,
+:host([data-position-area="inline-end block-start"]) .main {
+  --position-area: self-block-start self-inline-end;
+  --margin-inline: var(--gap) 0;
+  --margin-block: 0 var(--gap);
 
-  --inset: calc(var(--gap) * -1) auto auto calc(100% + var(--gap));
-  --translate-normal: 0 -85%;
-  --translate-active: 0 -100%;
+  --inset-inline: var(--size-with-unit) auto;
+  --inset-block: auto var(--size-with-unit);
 }
 
-:host([data-position-area="bottom left"]) .main,
-:host([data-position-area="left bottom"]) .main {
-  --position-area: bottom left;
-  --margin: var(--gap) var(--gap) 0 0;
+:host([data-position-area="block-end inline-start"]) .main,
+:host([data-position-area="inline-start block-end"]) .main {
+  --position-area: self-block-end self-inline-start;
+  --margin-inline: 0 var(--gap);
+  --margin-block: var(--gap) 0;
 
-  --inset: calc(100% + var(--gap)) auto auto calc(var(--gap) * -1);
-  --translate-normal: -100% 15%;
-  --translate-active: -100% 0;
+  --inset-inline: auto var(--size-with-unit);
+  --inset-block: var(--size-with-unit) auto;
 }
 
-:host([data-position-area="bottom right"]) .main,
-:host([data-position-area="right bottom"]) .main {
-  --position-area: bottom right;
-  --margin: var(--gap) 0 0 var(--gap);
+:host([data-position-area="block-end inline-end"]) .main,
+:host([data-position-area="inline-end block-end"]) .main,
+:host([data-position-area="end"]) .main {
+  --position-area: self-block-end self-inline-end;
+  --margin-inline: var(--gap) 0;
+  --margin-block: var(--gap) 0;
 
-  --inset: calc(100% + var(--gap)) auto auto calc(100% + var(--gap));
-  --translate-normal: 0 15%;
-  --translate-active: 0 0;
+  --inset-inline: var(--size-with-unit) auto;
+  --inset-block: var(--size-with-unit) auto;
 }
 </style>
 
-<div class="main" ontouchstart="">
+<div class="main main--maneuver" ontouchstart="">
   <button type="button" class="trigger button-two-face" popovertarget="shortcut" title="shortcut"></button>
   <div id="shortcut" class="shortcut" popover></div>
 </div>
@@ -658,9 +676,28 @@ export class MscShortcut extends HTMLElement {
 
         const menuTemplateString = Mustache.render(templateGroups.innerHTML, { groups: this.groups });
         shortcut.insertAdjacentHTML('beforeend', menuTemplateString);
+        
+        this.#setShortcutSize();
         break;
       }
     }
+  }
+
+  #setShortcutSize() {
+    if (isAnchorPositioningAPIReady) {
+      return;
+    }
+
+    const { styleSheet, shortcut } = this.#nodes;
+    const { width = 0, height = 0 } = shortcut.getBoundingClientRect();
+    _wcl.addStylesheetRules(
+      '.main.main--maneuver',
+      {
+        '--shortcut-inline-size': `${width}px`,
+        '--shortcut-block-size': `${height}px`
+      },
+      styleSheet
+    );
   }
 
   static get observedAttributes() {

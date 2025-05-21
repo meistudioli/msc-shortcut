@@ -8,6 +8,7 @@
 <script type="module" src="mjs/wc-msc-shortcut.js"></script>
 <link rel="stylesheet" href="https://blog.lalacube.com/mei/css/layers/defaults.css">
 <link rel="stylesheet" href="https://blog.lalacube.com/mei/css/layers/input-set.css">
+<link rel="stylesheet" href="https://blog.lalacube.com/mei/css/layers/radio-set.css">
 <style>
 /* reset */
 body,div,ul,ol,li,h1,h2,h3,h4,h5,h6,pre,form,fieldset,legend,input,textarea,p,article,aside,figcaption,figure,nav,section,mark,audio,video,main{margin:0;padding:0}
@@ -326,7 +327,12 @@ html,body{font-family:system-ui,sans-serif;text-size-adjust:100%;-ms-text-size-a
 #hd,#ft{display:none;}
 body{position:relative;inline-size:100vw;block-size:100vh;margin:0;background:var(--bd-bg);}
 
-.wrap{inline-size:100%;max-inline-size:min(500px, calc(100% - 2em));aspect-ratio:1/1;box-sizing:border-box;}
+.wrap {
+  inline-size: 100%;
+  max-inline-size: min(500px, calc(100% - 2em));
+  box-sizing: border-box;
+}
+
 .msc-shortcut__wrap {
   inline-size: 100%;
   aspect-ratio: 1/1;
@@ -351,6 +357,7 @@ body{position:relative;inline-size:100vw;block-size:100vh;margin:0;background:va
 }
 
 .msc-shortcut__wrap {
+  --direction: ltr;
   --background-color: rgba(220 226 240);
 
   position: relative;
@@ -360,6 +367,11 @@ body{position:relative;inline-size:100vw;block-size:100vh;margin:0;background:va
   margin-block: 4em 2em;
   border-radius: 1em;
   background-color: var(--background-color);
+  direction: var(--direction);
+
+  &[data-direction='rtl'] {
+    --direction: rtl;
+  }
 
   @media (prefers-color-scheme: dark) {
     --background-color: rgba(18 20 23);
@@ -413,8 +425,8 @@ msc-shortcut:not(:defined){display:none;}
 
 <body class="flex-center">
 <div class="wrap">
-  <div class="msc-shortcut__wrap">
-    <msc-shortcut data-position-area="right center">
+  <div class="msc-shortcut__wrap" data-direction="ltr">
+    <msc-shortcut data-position-area="inline-end center">
       <script type="application/json">
         {
           "groups": [
@@ -499,39 +511,66 @@ msc-shortcut:not(:defined){display:none;}
             <select name="position-area">
               <option value="-1" disabled>Select Position-area</option>
               <hr />
-              <optgroup label="top">
-                <option value="top center">top center</option>
-                <option value="top span-left">top span-left</option>
-                <option value="top span-right">top span-right</option>
-                <option value="top">top</option>
+              <optgroup label="block-start">
+                <option value="block-start center">block-start center</option>
+                <option value="block-start span-inline-start">block-start span-inline-start</option>
+                <option value="block-start span-inline-end">block-start span-inline-end</option>
+                <option value="block-start">block-start</option>
               </optgroup>
-              <optgroup label="right">
-                <option value="right center" selected>right center</option>
-                <option value="right span-top">right span-top</option>
-                <option value="right span-bottom">right span-bottom</option>
-                <option value="right">right</option>
+              <optgroup label="inline-end">
+                <option value="inline-end center" selected>inline-end center</option>
+                <option value="inline-end span-block-start">inline-end span-block-start</option>
+                <option value="inline-end span-block-end">inline-end span-block-end</option>
+                <option value="inline-end">inline-end</option>
               </optgroup>
-              <optgroup label="bottom">
-                <option value="bottom center">bottom center</option>
-                <option value="bottom span-left">bottom span-left</option>
-                <option value="bottom span-right">bottom span-right</option>
-                <option value="bottom">bottom</option>
+              <optgroup label="block-end">
+                <option value="block-end center">block-end center</option>
+                <option value="block-end span-inline-start">block-end span-inline-start</option>
+                <option value="block-end span-inline-end">block-end span-inline-end</option>
+                <option value="block-end">block-end</option>
               </optgroup>
-              <optgroup label="left">
-                <option value="left center">left center</option>
-                <option value="left span-top">left span-top</option>
-                <option value="left span-bottom">left span-bottom</option>
-                <option value="left">left</option>
+              <optgroup label="inline-start">
+                <option value="inline-start center">inline-start center</option>
+                <option value="inline-start span-block-start">inline-start span-block-start</option>
+                <option value="inline-start span-block-end">inline-start span-block-end</option>
+                <option value="inline-start">inline-start</option>
               </optgroup>
               <optgroup label="extra">
-                <option value="top left">top left</option>
-                <option value="top right">top right</option>
-                <option value="bottom left">bottom left</option>
-                <option value="bottom right">bottom right</option>
+                <option value="block-start inline-start">block-start inline-start</option>
+                <option value="block-start inline-end">block-start inline-end</option>
+                <option value="block-end inline-start">block-end inline-start</option>
+                <option value="block-end inline-end">block-end inline-end</option>
               </optgroup>
             </select>
             <label class="input-set__label">
               <span class="input-set__label__span">systemPrompt</span>
+            </label>
+          </div>
+        </div>
+      </li>
+
+      <li class="adjustments__row">
+        <p class="adjustments__row__subject">direction：</p>
+        <div class="adjustments__row__content">
+          <div class="il-pair a11y-block-link">
+            <div class="radio-set">
+              <input id="direction-0" type="radio" name="direction" value="ltr" checked />
+              <label class="radio-set__label" for="direction-0"></label>
+            </div>
+
+            <label for="direction-0">
+              ltr
+            </label>
+          </div>
+
+          <div class="il-pair a11y-block-link">
+            <div class="radio-set">
+              <input id="direction-1" type="radio" name="direction" value="rtl" />
+              <label class="radio-set__label" for="direction-1"></label>
+            </div>
+
+            <label for="direction-1">
+              rtl
             </label>
           </div>
         </div>
@@ -579,6 +618,24 @@ customElements.whenDefined('msc-shortcut').then(() => {
             '--msc-shortcut--gap': `${fd['gap']}px`
           }
         );
+
+        // direction
+        if (target.name === 'direction') {
+          wrap.dataset.direction = fd['direction'];
+
+          let timer = 0;
+
+          if (shortcut.open) {
+            shortcut.toggle(false);
+            timer = 450;
+          }
+
+          setTimeout(
+            () => {
+              shortcut.toggle(true);
+            }
+          , timer);
+        }
 
         // count
         const count = +fd['count'];
